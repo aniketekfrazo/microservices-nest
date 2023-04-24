@@ -19,6 +19,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
       inject: [ConfigService],
     }),
+    // MongooseModule.forRoot('mongodb://mongodb:27017/bird'),
    
     BirdModule
   ],
