@@ -13,7 +13,7 @@ export class BirdController {
   }
   @Get('/data/:id')
     async findOnedata(@Param('id', ParseIntPipe) id: number) {
-      return "this.cService.findOne(id)";
+      return "this.birdService.findOne(id)";
     }
 
   @Get()
