@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, InternalServerErrorException } from '@nestjs/common';
 import { NonPayableService } from './non-payable.service';
 import { CreateNonPayableDto } from './dto/create-non-payable.dto';
 import { UpdateNonPayableDto } from './dto/update-non-payable.dto';
+import { NotFoundError } from 'rxjs';
 
 @Controller('non-payable')
 export class NonPayableController {
@@ -9,7 +10,14 @@ export class NonPayableController {
 
   @Post()
   create(@Body() createNonPayableDto: CreateNonPayableDto) {
-    return this.nonPayableService.create(createNonPayableDto);
+    
+      let saveddata=this.nonPayableService.create(createNonPayableDto);
+      if(saveddata){       
+        return saveddata;
+      }else{
+        return "some error occured"        
+      }  
+   
   }
 
   @Get()

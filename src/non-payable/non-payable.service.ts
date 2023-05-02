@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateNonPayableDto } from './dto/create-non-payable.dto';
 import { UpdateNonPayableDto } from './dto/update-non-payable.dto';
 import { NonPayable } from './schemas/non-payable';
@@ -10,13 +10,19 @@ import { Model } from 'mongoose';
 export class NonPayableService {
 
   constructor(@InjectModel(NonPayable.name) private birdModel: Model<NonPayable>){}
-  create(createNonPayableDto: CreateNonPayableDto) : Promise<NonPayable>{
+  async create(createNonPayableDto: CreateNonPayableDto) : Promise<NonPayable>{
     const model=new this.birdModel();
     model.name=createNonPayableDto.name;
     model.code=createNonPayableDto.code;
     model.isDisable=createNonPayableDto.isDisable;
-
-    return model.save();
+try{
+  let data =await model.save();
+  return data;
+}catch(error){
+  throw new InternalServerErrorException('Error');
+  
+}
+    
   }
 
   findAll(): Promise<NonPayable[]> {

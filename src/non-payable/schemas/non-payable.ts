@@ -10,7 +10,7 @@ export class NonPayable {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required:true ,default: 30})
+  @Prop({ required:true,unique: true})
   code: number;
 
   @Prop({ default: false })
